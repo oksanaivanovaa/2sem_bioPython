@@ -1,3 +1,5 @@
+#SEE HW02.py! Upgraded
+
 import sys
 from Bio.Seq import Seq
 
