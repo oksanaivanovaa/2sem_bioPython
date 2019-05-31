@@ -25,17 +25,13 @@ plt.show(block=True)
 my_iter = map(lambda x: True if x%3 == 0 else False, [1,2,3,4,5,6])
 print(list(my_iter))
 
-l = [1,2,3,4]
+print("______________________________")
 
-def gen(k):
-    for i in range(k):
-        yield i
-
-x = gen(3)
+x = my_iter
 while True:
     try:
         print(next(x))
-    except:
+    except StopIteration:
         break
 # Error here is "StopIteration". I have fixed it with try-except block
 
