@@ -4,9 +4,11 @@ import random
 
 
 def create_snp(n, seq):
-    assert "Number of SNP is longer than length of seq", n < len(seq);
+    if n > len(seq):
+        print('X in SNPX is bigger than the length of the shortest string in a file')
+        n = len(seq)
 
-    snp_pos = random.sample(range(0, len(seq)), 3)
+    snp_pos = random.sample(range(0, len(seq)), n)
     answer = []
     for pos in snp_pos:
         new_snp = random.choice(('A', 'C', 'G', 'T'))
@@ -35,17 +37,18 @@ def main():
 
     filename = sys.argv[1]
     n = sys.argv[2]
-    n = int(n)
+    n = int(re.sub('\D', '', str(n)))
 
     try:
         process_file(filename, n)
 
-    except FileNotFoundError as error:
+    except FileNotFoundError:
         print(f"No such file: {filename}")
+        exit()
 
 
 if __name__ == '__main__':
     main()
 
 
-""""Type into console "python3 HW04_snp.py ./prom.txt 3 """
+""""Type into console "python3 HW04_snp.py ./prom.txt SNP3 """
