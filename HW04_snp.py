@@ -1,12 +1,9 @@
 import re
 import sys
 import random
-
+import warnings
 
 def create_snp(n, seq):
-    if n > len(seq):
-        print('X in SNPX is bigger than the length of the shortest string in a file')
-        n = len(seq)
 
     snp_pos = random.sample(range(0, len(seq)), n)
     answer = []
@@ -37,14 +34,25 @@ def main():
 
     filename = sys.argv[1]
     n = sys.argv[2]
-    n = int(re.sub('\D', '', str(n)))
+    n = int(re.sub('\D', '', n))
 
     try:
-        process_file(filename, n)
-
+        open(filename)
     except FileNotFoundError:
         print(f"No such file: {filename}")
         exit()
+
+    smallest = n
+    with open(filename) as f:
+        for line in f:
+            seq_id, seq = re.split(r'\s+', line.strip())
+            smallest = min(len(seq), smallest)
+
+    if min(smallest, n) != n:
+        warnings.warn("X in SNPX is bigger than the length of the shortest string in a file", Warning)
+        n = smallest
+
+    process_file(filename, n)
 
 
 if __name__ == '__main__':
